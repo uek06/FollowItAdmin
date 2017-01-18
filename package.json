@@ -114,6 +114,7 @@
     "electron": "^1.4.0"
   },
   "scripts": {
+    "deploy": "npm run prebuild:prod && npm run build:prod && xcopy /s to-dist\\*.* dist && git add --all && git commit -m \"autocommit\" && git subtree push --prefix dist heroku master",
     "rimraf": "rimraf",
     "tslint": "tslint",
     "typedoc": "typedoc",
