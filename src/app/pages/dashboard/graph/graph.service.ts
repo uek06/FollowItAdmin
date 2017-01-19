@@ -58,9 +58,13 @@ export class GraphService {
       function (element) {
         var node = {};
         node["v"] = element.data.id;
-        var label = {};
-        label["label"] = "node "+element.data.id;
-        node["value"] = label;
+        var value = {};
+        value["label"] = "node "+element.data.id;
+        var coord = {};
+        coord["x"] = element.position.x;
+        coord["y"] = element.position.y;
+        value["coord"] = coord;
+        node["value"] = value;
         nodes.push(node);
       });
 
@@ -70,9 +74,10 @@ export class GraphService {
         var edge = {};
         edge["v"] = element.data.source;
         edge["w"] = element.data.target;
-        var label = {};
-        label["label"] = "edge "+element.data.source+"->"+element.data.target;
-        edge["value"] = label;
+        var value = {};
+        value["label"] = "edge "+element.data.source+"->"+element.data.target;
+        value["weight"] = "??";
+        edge["value"] = value;
         edges.push(edge);
       });
 
@@ -81,14 +86,9 @@ export class GraphService {
     jsonToSend["nodes"] = nodes;
     jsonToSend["edges"] = edges;
 
-     /*$.ajax({
-       type: 'POST',
-       url: 'https://followit-backend.herokuapp.com/api/updateGraph',
-       data: jsonToSend,
-       dataType: 'json'
-     });*/
+
     this.http.post('https://followit-backend.herokuapp.com/api/updateGraph',jsonToSend).subscribe(res => {
-      console.log("trop sec");
+      console.log("HTTP post OK");
     });
 }
 
