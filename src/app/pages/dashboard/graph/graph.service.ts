@@ -8,11 +8,11 @@ export class GraphService {
   loadedContent: any; // will create a real type later
   obs: Observable<any>;
 
-  constructor(private _baConfig:BaThemeConfigProvider, private http: Http) {
+  constructor(private _baConfig: BaThemeConfigProvider, private http: Http) {
     this.obs = this.http.get('https://followit-backend.herokuapp.com/api/graph')
-      .map((res:Response) => res.json())
+      .map((res: Response) => res.json())
       .do(res => {
-          var newJson = [];
+ /*         var newJson = [];
 
           res.nodes.forEach(
             function (element) {
@@ -27,16 +27,16 @@ export class GraphService {
               let start = element.v;
               let finish = element.w;
               var inside = {};
-              inside["id"] = start+finish;
+              inside["id"] = start + finish;
               inside["source"] = start;
               inside["target"] = finish;
               var o = {};
               o["data"] = inside;
               newJson.push(o);
-            });
-        //this.loadedContent = newJson;
+            });*/
+          //this.loadedContent = newJson;
         }
-        );
+      );
   }
 
   getContent() {
@@ -47,19 +47,36 @@ export class GraphService {
     }
   }
 
-  sendUpdatedGraph(o : Array<Object>){
+  sendUpdatedGraph(o: Array<Object>) {
     var options = {};
     options["directed"] = true;
     options["multigraph"] = false;
     options["compound"] = false;
 
     var nodes = [];
-    o["nodes"].forEach(
+    var poi = [];
+    poi.push("learning");
+    poi.push("amphi forum");
+    poi.push("salle d'exam");
+    poi.push("salle 330");
+    poi.push("salle 142");
+    poi.push("ubiquarium");
+    poi.push("ru");
+    poi.push("dut clio");
+    poi.push("fratelli");
+    poi.push("le ptit cafe");
+    poi.push("macdo");
+    poi.push("burger king");
+    var elements = o["elements"];
+    elements["nodes"].forEach(
       function (element) {
         var node = {};
         node["v"] = element.data.id;
         var value = {};
-        value["label"] = "node "+element.data.id;
+        value["label"] = "node " + element.data.id;
+        var nPoi = [];
+        nPoi.push(poi.pop());
+        value["POI"] = nPoi;
         var coord = {};
         coord["x"] = element.position.x;
         coord["y"] = element.position.y;
@@ -69,14 +86,14 @@ export class GraphService {
       });
 
     var edges = [];
-    o["edges"].forEach(
+    elements["edges"].forEach(
       function (element) {
         var edge = {};
         edge["v"] = element.data.source;
         edge["w"] = element.data.target;
         var value = {};
-        value["label"] = "edge "+element.data.source+"->"+element.data.target;
-        value["weight"] = "??";
+        value["label"] = "edge " + element.data.source + "->" + element.data.target;
+        value["weight"] = 2;
         edge["value"] = value;
         edges.push(edge);
       });
@@ -85,71 +102,19 @@ export class GraphService {
     jsonToSend["options"] = options;
     jsonToSend["nodes"] = nodes;
     jsonToSend["edges"] = edges;
+    jsonToSend["temp"] = o;
 
 
-    this.http.post('https://followit-backend.herokuapp.com/api/updateGraph',jsonToSend).subscribe(res => {
+    this.http.post('https://followit-backend.herokuapp.com/api/updateGraph', jsonToSend).subscribe(res => {
       console.log("HTTP post OK");
     });
-}
+  }
+
 
   //getItems():Observable<TodoItem> { return this.http.get('/api/todo').map((res: Response) => res.json()); }
   getData() {
     //let pieColor = this._baConfig.get().colors.custom.dashboardPieChart;
     var newJson = [];
     return this.http.get('https://followit-backend.herokuapp.com/api/graph');
-    /*return this.http.get('https://followit-backend.herokuapp.com/api/graph')
-      .map(res => res.json())
-      .subscribe(races => {
-        races.nodes.forEach(
-          function (element) {
-            var inside = {};
-            inside["id"] = element.v;
-            var o = {};
-            o["data"] = inside;
-            newJson.push(o);
-          });
-        races.edges.forEach(
-          function (element) {
-            let start = element.v;
-            let finish = element.w;
-            var inside = {};
-            inside["id"] = start+finish;
-            inside["source"] = start;
-            inside["target"] = finish;
-            var o = {};
-            o["data"] = inside;
-            newJson.push(o);
-          });
-
-        //console.log(newJson);
-        return newJson;*/
-      //}
-      //)
-
-
-    //return[];
-/*    return [
-      {
-        color: pieColor,
-        description: 'New Visits',
-        stats: '57,820',
-        icon: 'person',
-      }, {
-        color: pieColor,
-        description: 'Purchases',
-        stats: '$ 89,745',
-        icon: 'money',
-      }, {
-        color: pieColor,
-        description: 'Active Users',
-        stats: '178,391',
-        icon: 'face',
-      }, {
-        color: pieColor,
-        description: 'Returned',
-        stats: '32,592',
-        icon: 'refresh',
-      }
-    ];*/
   }
 }
