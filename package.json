@@ -30,7 +30,7 @@
     "core-js": "^2.4.1",
     "cytoscape": "^2.7.14",
     "cytoscape-context-menus": "^2.1.1",
-    "cytoscape-cxtmenu": "^2.9.2",
+    "cytoscape-edgehandles": "^2.8.0",
     "easy-pie-chart": "^2.1.7",
     "extract-text-webpack-plugin": "2.0.0-beta.3",
     "font-awesome": "^4.6.3",
