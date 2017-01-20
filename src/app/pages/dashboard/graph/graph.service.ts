@@ -54,19 +54,6 @@ export class GraphService {
     options["compound"] = false;
 
     var nodes = [];
-    var poi = [];
-    poi.push("learning");
-    poi.push("amphi forum");
-    poi.push("salle d'exam");
-    poi.push("salle 330");
-    poi.push("salle 142");
-    poi.push("ubiquarium");
-    poi.push("ru");
-    poi.push("dut clio");
-    poi.push("fratelli");
-    poi.push("le ptit cafe");
-    poi.push("macdo");
-    poi.push("burger king");
     var elements = o["elements"];
     elements["nodes"].forEach(
       function (element) {
@@ -74,9 +61,7 @@ export class GraphService {
         node["v"] = element.data.id;
         var value = {};
         value["label"] = "node " + element.data.id;
-        var nPoi = [];
-        nPoi.push(poi.pop());
-        value["POI"] = nPoi;
+        value["POI"] = element.data.POI;
         var coord = {};
         coord["x"] = element.position.x;
         coord["y"] = element.position.y;
