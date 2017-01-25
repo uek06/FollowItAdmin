@@ -15,6 +15,18 @@ export const PAGES_MENU = [
         }
       },
       {
+        path: 'beacons',
+        data: {
+          menu: {
+            title: 'Beacons',
+            icon: 'ion-ios-location-outline',
+            selected: false,
+            expanded: false,
+            order: 50
+          }
+        }
+      },
+      {
         path: 'editors',
         data: {
           menu: {
