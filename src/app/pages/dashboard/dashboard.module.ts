@@ -24,12 +24,17 @@ import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
 
+
+import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { Modals } from '../ui/components/modals/modals.component';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NgaModule,
-    routing
+    routing,
+    ModalModule
   ],
   declarations: [
     PopularApp,
@@ -41,7 +46,8 @@ import { UsersMapService } from './usersMap/usersMap.service';
     Feed,
     Todo,
     Calendar,
-    Dashboard
+    Dashboard,
+    Modals
   ],
   providers: [
     CalendarService,

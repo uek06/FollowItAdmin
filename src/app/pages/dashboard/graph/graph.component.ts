@@ -1,5 +1,4 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-
 import {GraphService} from './graph.service';
 
 import './graph.loader.ts';
@@ -63,7 +62,7 @@ export class Graph {
   }
 
   private _loadGraph() {
-    var newJson = this.jsonFromServerToCY();
+    //var newJson = this.jsonFromServerToCY();
     this.cy = cytoscape({
       container: $('#cy')
     });
@@ -105,7 +104,7 @@ export class Graph {
 
   private clicked(event) {
     event.preventDefault();
-    var apoi = [];
+/*    var apoi = [];
     apoi.push('Bat forum');
     this.cy.$('#a').data('POI', apoi);
     var bpoi = [];
@@ -122,7 +121,7 @@ export class Graph {
     this.cy.$('#e').data('POI', epoi);
     var fpoi = [];
     fpoi.push('Foyer côté ouest');
-    this.cy.$('#f').data('POI', fpoi);
+    this.cy.$('#f').data('POI', fpoi);*/
     this._pieChartService.sendUpdatedGraph(this.cy.json());
   }
 
