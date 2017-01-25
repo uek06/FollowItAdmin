@@ -29,29 +29,21 @@ export class SmartTables {
       confirmDelete: true
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number'
-      },
-      firstName: {
-        title: 'First Name',
+      name: {
+        title: 'Name',
         type: 'string'
       },
-      lastName: {
-        title: 'Last Name',
+      UUID: {
+        title: 'UUID',
         type: 'string'
       },
-      username: {
-        title: 'Username',
+      major: {
+        title: 'Major',
         type: 'string'
       },
-      email: {
-        title: 'E-mail',
+      minor: {
+        title: 'Minor',
         type: 'string'
-      },
-      age: {
-        title: 'Age',
-        type: 'number'
       }
     }
   };

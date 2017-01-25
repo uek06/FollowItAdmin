@@ -6,6 +6,7 @@ import {cytoscape} from "./graph.loader";
 import {contextMenus} from "./graph.loader";
 import {edgehandles} from "./graph.loader";
 import {jquery} from "./graph.loader";
+
 @Component({
   selector: 'graph',
   encapsulation: ViewEncapsulation.None,
@@ -14,87 +15,21 @@ import {jquery} from "./graph.loader";
 })
 export class Graph {
 
-  public charts: Array<Object>;
-  public graphModel: Object;
-  private _init = false;
   content: any; // real type to come later
   cy: any;
 
-  constructor(private _pieChartService: GraphService) {
-    //this.charts = this._pieChartService.getData();
-    this._pieChartService.getContent().subscribe(content => {
-      this.content = content;
+  constructor(private service: GraphService) {
+    this.service.getData().then((data) => {
+      this.content = data;
       this._loadGraph();
     });
   }
 
-  ngAfterViewInit() {
-    if (!this._init) {
-      this._updatePieCharts();
-      this._init = true;
-    }
-  }
-
-  private jsonFromServerToCY() {
-    var newJson = [];
-
-    this.content.nodes.forEach(
-      function (element) {
-        var inside = {};
-        inside["id"] = element.v;
-        var o = {};
-        o["data"] = inside;
-        newJson.push(o);
-      });
-    this.content.edges.forEach(
-      function (element) {
-        let start = element.v;
-        let finish = element.w;
-        var inside = {};
-        inside["id"] = start + finish;
-        inside["source"] = start;
-        inside["target"] = finish;
-        var o = {};
-        o["data"] = inside;
-        newJson.push(o);
-      });
-    return newJson;
-  }
-
   private _loadGraph() {
-    //var newJson = this.jsonFromServerToCY();
     this.cy = cytoscape({
       container: $('#cy')
     });
     this.cy.json(this.content.temp);
-
-
-   /* this.cy = cytoscape({
-      container: $('#cy'),
-      elements: newJson,
-      style: [ // the stylesheet for the graph
-        {
-          selector: 'node',
-          style: {
-            'label': 'data(id)'
-          }
-        },
-        {
-          selector: 'edge',
-          style: {
-            'target-arrow-shape': 'triangle'
-          }
-        },
-        {
-          selector: ':selected',
-          style: {}
-        }
-      ],
-      layout: {
-        name: 'grid',
-        rows: 1
-      }
-    });*/
 
     this.loadContextMenus();
     this.loadEdgehandles();
@@ -122,7 +57,7 @@ export class Graph {
     var fpoi = [];
     fpoi.push('Foyer côté ouest');
     this.cy.$('#f').data('POI', fpoi);*/
-    this._pieChartService.sendUpdatedGraph(this.cy.json());
+    this.service.sendUpdatedGraph(this.cy.json());
   }
 
   private loadContextMenus() {
@@ -237,13 +172,4 @@ export class Graph {
       this.cy.edgehandles( defaults );
     }
 
-  private _updatePieCharts() {
-    let getRandomArbitrary = (min, max) => {
-      return Math.random() * (max - min) + min;
-    };
-
-    jQuery('.pie-charts .chart').each(function (index, chart) {
-      jQuery(chart).data('easyPieChart').update(getRandomArbitrary(55, 90));
-    });
-  }
 }

@@ -1,51 +1,14 @@
 import {Injectable} from '@angular/core';
-import {BaThemeConfigProvider, colorHelper} from '../../../theme';
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs";
 
 @Injectable()
 export class GraphService {
   loadedContent: any; // will create a real type later
-  obs: Observable<any>;
 
-  constructor(private _baConfig: BaThemeConfigProvider, private http: Http) {
-    this.obs = this.http.get('https://followit-backend.herokuapp.com/api/graph')
-      .map((res: Response) => res.json())
-      .do(res => {
- /*         var newJson = [];
-
-          res.nodes.forEach(
-            function (element) {
-              var inside = {};
-              inside["id"] = element.v;
-              var o = {};
-              o["data"] = inside;
-              newJson.push(o);
-            });
-          res.edges.forEach(
-            function (element) {
-              let start = element.v;
-              let finish = element.w;
-              var inside = {};
-              inside["id"] = start + finish;
-              inside["source"] = start;
-              inside["target"] = finish;
-              var o = {};
-              o["data"] = inside;
-              newJson.push(o);
-            });*/
-          //this.loadedContent = newJson;
-        }
-      );
+  constructor(private http: Http) {
   }
 
-  getContent() {
-    if (this.loadedContent) {
-      return Observable.of(this.loadedContent);
-    } else {
-      return this.obs;
-    }
-  }
 
   sendUpdatedGraph(o: Array<Object>) {
     var options = {};
@@ -95,11 +58,12 @@ export class GraphService {
     });
   }
 
-
-  //getItems():Observable<TodoItem> { return this.http.get('/api/todo').map((res: Response) => res.json()); }
-  getData() {
-    //let pieColor = this._baConfig.get().colors.custom.dashboardPieChart;
-    var newJson = [];
-    return this.http.get('https://followit-backend.herokuapp.com/api/graph');
+  getData(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get('https://followit-backend.herokuapp.com/api/graph')
+        .subscribe(response => {
+          resolve(response.json())
+        });
+    });
   }
 }
