@@ -30,7 +30,9 @@ export class Graph {
       container: $('#cy')
     });
     this.cy.json(this.content.temp);
-
+    this.cy.on('select', 'node', function(event){
+      console.log(event.cyTarget.id());
+    });
     this.loadContextMenus();
     this.loadEdgehandles();
 
@@ -78,9 +80,9 @@ export class Graph {
           title: 'rename',
           selector: 'node',
           onClickFunction: function (event) {
-            //event.cyTarget.id = "yolo";
-            this.cy.$('#a').data('label', 'newName');
-            this.cy.$('#a').data('id', 'newName')
+            console.log(event.cyTarget.id());
+            //this.cy.$('#a').data('label', 'newName');
+            //this.cy.$('#a').data('id', 'newName')
           }.bind(this),
           hasTrailingDivider: true
         },
