@@ -10,14 +10,14 @@ export class GraphService {
   }
 
 
-  sendUpdatedGraph(o: Array<Object>) {
+  sendUpdatedGraph(cyObject: Array<Object>, beaconsArray: Array<Object>) {
     var options = {};
     options["directed"] = true;
     options["multigraph"] = false;
     options["compound"] = false;
 
     var nodes = [];
-    var elements = o["elements"];
+    var elements = cyObject["elements"];
     elements["nodes"].forEach(
       function (element) {
         var node = {};
@@ -25,6 +25,7 @@ export class GraphService {
         var value = {};
         value["label"] = "node " + element.data.id;
         value["POI"] = element.data.POI;
+        value["beacon"] = element.data.beacon;
         var coord = {};
         coord["x"] = element.position.x;
         coord["y"] = element.position.y;
@@ -50,7 +51,8 @@ export class GraphService {
     jsonToSend["options"] = options;
     jsonToSend["nodes"] = nodes;
     jsonToSend["edges"] = edges;
-    jsonToSend["temp"] = o;
+    jsonToSend["temp"] = cyObject;
+    jsonToSend["beacons"] = beaconsArray;
 
 
     this.http.post('https://followit-backend.herokuapp.com/api/updateGraph', jsonToSend).subscribe(res => {

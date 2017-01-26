@@ -6,8 +6,8 @@ export const PAGES_MENU = [
         path: 'dashboard',
         data: {
           menu: {
-            title: 'Dashboard',
-            icon: 'ion-android-home',
+            title: 'Graph nodes',
+            icon: 'ion-grid',
             selected: false,
             expanded: false,
             order: 0

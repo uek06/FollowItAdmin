@@ -24,9 +24,8 @@ import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
 
-
 import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { Modals } from '../ui/components/modals/modals.component';
+
 
 @NgModule({
   imports: [
@@ -46,8 +45,7 @@ import { Modals } from '../ui/components/modals/modals.component';
     Feed,
     Todo,
     Calendar,
-    Dashboard,
-    Modals
+    Dashboard
   ],
   providers: [
     CalendarService,

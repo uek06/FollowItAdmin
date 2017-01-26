@@ -17,7 +17,9 @@ export class EditTableService {
 
   sendUpdatedBeacons(promise :Promise<any>) {
     promise.then((data) => {
-      this.http.post('https://followit-backend.herokuapp.com/api/updateBeacons', data).subscribe(res => {
+      var beacons ={};
+      beacons["beacons"] = data;
+      this.http.post('https://followit-backend.herokuapp.com/api/updateBeacons', beacons).subscribe(res => {
         console.log("HTTP post OK");
       });
     });

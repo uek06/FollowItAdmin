@@ -50,6 +50,9 @@ import { IconsService } from './components/icons/icons.service';
   ],
   providers: [
     IconsService
+  ],
+  exports: [
+    Modals
   ]
 })
 export default class UiModule {
