@@ -91,7 +91,8 @@ export const PAGES_MENU = [
             }
           }
         ]
-      },
+      },*/
+      /*
       {
         path: 'ui',
         data: {
@@ -145,7 +146,7 @@ export const PAGES_MENU = [
             }
           },
         ]
-      },*/
+      },
       {
         path: 'forms',
         data: {
@@ -175,7 +176,7 @@ export const PAGES_MENU = [
             }
           }
         ]
-      },
+      },*/
 /*      {
         path: 'tables',
         data: {
