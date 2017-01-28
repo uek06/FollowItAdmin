@@ -1,5 +1,8 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {GraphService} from './graph.service';
+import {TestService} from '../test.service';
+
+import {Input, Output, EventEmitter} from '@angular/core'
 
 import './graph.loader.ts';
 import {cytoscape} from "./graph.loader";
@@ -14,11 +17,11 @@ import {jquery} from "./graph.loader";
   template: require('./graph.html')
 })
 export class Graph {
-
   content: any; // real type to come later
   cy: any;
 
-  constructor(private service: GraphService) {
+  constructor(private service: GraphService, private testService: TestService) {
+
     this.service.getData().then((data) => {
       this.content = data;
       this._loadGraph();
@@ -26,18 +29,22 @@ export class Graph {
   }
 
   private _loadGraph() {
+    var lol = this.testService;
     this.cy = cytoscape({
       container: $('#cy')
     });
     this.cy.json(this.content.temp);
+
     this.cy.on('select', 'node', function(event){
-      console.log(event.cyTarget.id());
-    });
+      //var id = event.cyTarget.id();
+      var data = event.cyTarget.data();
+      this.testService.sendData(data);
+    }.bind(this));
+
     this.loadContextMenus();
     this.loadEdgehandles();
 
   }
-
 
   private clicked(event) {
     event.preventDefault();
@@ -59,6 +66,7 @@ export class Graph {
     var fpoi = [];
     fpoi.push('Foyer côté ouest');
     this.cy.$('#f').data('POI', fpoi);*/
+
     this.service.sendUpdatedGraph(this.cy.json(),this.content.beacons);
   }
 
@@ -91,8 +99,11 @@ export class Graph {
           title: 'add node',
           coreAsWell: true,
           onClickFunction: function (event) {
+            var tabPOI=[];
+            tabPOI.push("??");
             var data = {
-              group: 'nodes'
+              group: 'nodes',
+              POI: tabPOI
             };
 
             this.cy.add({

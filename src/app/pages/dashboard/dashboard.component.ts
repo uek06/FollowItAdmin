@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component,Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'dashboard',
@@ -7,6 +7,9 @@ import {Component, ViewEncapsulation} from '@angular/core';
   template: require('./dashboard.html')
 })
 export class Dashboard {
+
+  //selectedCustomer: string;
+  @Input() customers: string[];
 
   constructor() {
   }
