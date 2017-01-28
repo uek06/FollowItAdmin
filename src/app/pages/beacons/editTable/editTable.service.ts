@@ -8,9 +8,9 @@ export class EditTableService {
 
   getData(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get('https://followit-backend.herokuapp.com/api/graph')
+      this.http.get('https://followit-backend.herokuapp.com/api/getAllBeacons')
         .subscribe(response => {
-          resolve(response.json().beacons)
+          resolve(response.json())
         });
     });
   }
