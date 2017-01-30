@@ -45,6 +45,14 @@ export class GraphService {
         value["weight"] = 2;
         edge["value"] = value;
         edges.push(edge);
+        var edge2 = {};
+        edge2["v"] = element.data.target;
+        edge2["w"] = element.data.source;
+        var value2 = {};
+        value2["label"] = "edge " + element.data.target + "->" + element.data.source;
+        value2["weight"] = 2;
+        edge2["value"] = value2;
+        edges.push(edge2);
       });
 
     var jsonToSend = {};
