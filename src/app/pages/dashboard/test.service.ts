@@ -15,6 +15,24 @@ export class TestService {
     return "getdata";
   }
 
+  getPOIs(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get('https://followit-backend.herokuapp.com/api/getAllPOI')
+        .subscribe(response => {
+          resolve(response.json())
+        });
+    });
+  }
+
+  getBeacons(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get('https://followit-backend.herokuapp.com/api/getAllBeacons')
+        .subscribe(response => {
+          resolve(response.json())
+        });
+    });
+  }
+
   sendData(data : Object) {
     this.nodeObjectSubject.next(data);
   }

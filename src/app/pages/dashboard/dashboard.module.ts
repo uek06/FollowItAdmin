@@ -5,7 +5,7 @@ import { NgaModule } from '../../theme/nga.module';
 
 import { Dashboard } from './dashboard.component';
 import { routing }       from './dashboard.routing';
-import { FormsModule as AngularFormsModule } from '@angular/forms';
+import { FormsModule as AngularFormsModule , ReactiveFormsModule } from '@angular/forms';
 
 
 import { Graph } from './graph';
@@ -21,6 +21,7 @@ import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgaModule,
     routing,
     ModalModule

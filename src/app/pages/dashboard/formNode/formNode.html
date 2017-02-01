@@ -1,14 +1,46 @@
-<form>
+
   <div *ngIf="node">
+    <form [formGroup]="myForm" (ngSubmit)="save(myForm)">
+      <!-- node id -->
     <div class="form-group">
-      <label for="exampleInputEmail1">Id</label>
-      <input type="texxt" class="form-control" id="exampleInputEmail1" placeholder="{{node.id}}">
+      <label for="inputId">Id</label>
+      <input type="text" class="form-control" id="inputId" formControlName="id" value="{{node.id}}">
     </div>
+
+    <!-- list of pois -->
     <div class="form-group">
-      <label for="exampleInputPassword1">POI</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <label>Points of interest</label>
+      <div formArrayName="pois">
+          <div *ngFor="let poi of myForm.controls.pois.controls; let i=index">
+              <!-- address header, show remove button when more than one address available -->
+              <div>
+                  <span *ngIf="myForm.controls.pois.controls.length > 1"
+                      (click)="removeStore(i)">
+                  </span>
+              </div>
+              <div [formGroupName]="i">
+                <select formControlName="id" class="form-control">
+                  <option *ngFor="let p of pois" [ngValue]="p._id" [selected]="poi.poi==p._id ? true : null" >{{p.poi}}</option>
+                </select>
+              </div>
+          </div>
+      </div>
     </div>
+    <div>
+          <a (click)="addStore()" style="cursor: default">
+            Add another store +
+          </a>
+        </div>
+        <!-- beacon -->
+        <div class="form-group">
+          <label>Beacon</label>
+          <select formControlName="beacon" class="form-control">
+            <option *ngFor="let b of beacons" [ngValue]="b._id" [selected]="node.beacon==b._id ? true : null" >{{b.name}}</option>
+          </select>
+        </div>
+        <br/>
     <button type="submit" class="btn btn-danger">Save node</button>
+    </form>
 </div>
 <div *ngIf="!node">
 Please select a node
@@ -25,4 +57,3 @@ Please select a node
     <ba-checkbox [(ngModel)]="isChecked" [label]="'Check me out'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
   </div>
   <button type="submit" class="btn btn-danger">Submit</button>-->
-</form>

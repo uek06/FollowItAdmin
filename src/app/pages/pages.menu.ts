@@ -15,6 +15,18 @@ export const PAGES_MENU = [
         }
       },
       {
+        path: 'stores',
+        data: {
+          menu: {
+            title: 'Stores',
+            icon: 'ion-ios-cart-outline',
+            selected: false,
+            expanded: false,
+            order: 50
+          }
+        }
+      },
+      {
         path: 'beacons',
         data: {
           menu: {
@@ -25,7 +37,7 @@ export const PAGES_MENU = [
             order: 50
           }
         }
-      },
+      }
 /*      {
         path: 'editors',
         data: {

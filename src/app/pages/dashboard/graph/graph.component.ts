@@ -67,7 +67,7 @@ export class Graph {
     fpoi.push('Foyer côté ouest');
     this.cy.$('#f').data('POI', fpoi);*/
 
-    this.service.sendUpdatedGraph(this.cy.json(),this.content.beacons);
+    this.service.sendUpdatedGraph(this.cy.json());
   }
 
   private loadContextMenus() {
