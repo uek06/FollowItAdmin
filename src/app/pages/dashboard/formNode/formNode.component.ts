@@ -27,19 +27,18 @@ export class FormNode {
 
       this.myForm = this._fb.group({
             id: [nodeData["id"], Validators.required],
-            pois: this._fb.array([
+            poiID: this._fb.array([
                 this.initStore(),
             ]),
-            beacon: [nodeData["beaconID"], Validators.required]
+            beaconID: nodeData["beaconID"]
         });
       this.node = nodeData;
 this.loadPOIs();
-console.log(this.myForm.controls["pois"]);
     });
   }
 
   loadPOIs() {
-    const control = <FormArray>this.myForm.controls['pois'];
+    const control = <FormArray>this.myForm.controls['poiID'];
     control.removeAt(0);
 this.node["poiID"].forEach(
       function (element) {
@@ -49,7 +48,7 @@ this.node["poiID"].forEach(
 
     initStoreWithID(givenId : string) {
           return this._fb.group({
-              _poiID: [givenId, Validators.required]
+              _poiID: givenId
           });
       }
 
@@ -60,12 +59,12 @@ this.node["poiID"].forEach(
     }
 
     addStore() {
-    const control = <FormArray>this.myForm.controls['pois'];
+    const control = <FormArray>this.myForm.controls['poiID'];
     control.push(this.initStore());
 }
 
 removeAddress(i: number) {
-    const control = <FormArray>this.myForm.controls['pois'];
+    const control = <FormArray>this.myForm.controls['poiID'];
     control.removeAt(i);
 }
   save(model: Object) {

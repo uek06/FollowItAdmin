@@ -18,6 +18,7 @@ export class EditTableStores {
       addButtonContent: '<i class="ion-ios-plus-outline"></i>',
       createButtonContent: '<i class="ion-checkmark"></i>',
       cancelButtonContent: '<i class="ion-close"></i>',
+      confirmCreate: true
     },
     edit: {
       editButtonContent: '<i class="ion-edit"></i>',
@@ -29,20 +30,12 @@ export class EditTableStores {
       confirmDelete: true
     },
     columns: {
-      name: {
+      poi: {
         title: 'Name',
         type: 'string'
       },
-      UUID: {
-        title: 'UUID',
-        type: 'string'
-      },
-      major: {
-        title: 'Major',
-        type: 'string'
-      },
-      minor: {
-        title: 'Minor',
+      discount: {
+        title: 'Discount',
         type: 'string'
       }
     }
@@ -56,9 +49,29 @@ export class EditTableStores {
     });
   }
 
+  onCreateConfirm(event): void {
+     if (window.confirm('Are you sure you want to create?')) {
+       this.source.getElements().then((data) => {
+         var max = 0;
+         data.forEach(
+      function (element) {
+        if (element['poiID'] > max) {
+          max = element['poiID'];
+        }
+      }.bind(this));
+
+             event.newData['poiID'] = ""+ ++max;
+             event.confirm.resolve(event.newData);
+       });
+
+     } else {
+       event.confirm.reject();
+     }
+   }
+
   private clicked(event) {
     event.preventDefault();
-    this.service.sendUpdatedBeacons(this.source.getElements());
+    this.service.sendUpdatedPOI(this.source.getElements());
   }
 
   onDeleteConfirm(event): void {

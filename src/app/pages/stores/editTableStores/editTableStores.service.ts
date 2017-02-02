@@ -8,18 +8,18 @@ export class EditTableStoresService {
 
   getData(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get('https://followit-backend.herokuapp.com/api/getAllBeacons')
+      this.http.get('https://followit-backend.herokuapp.com/api/getallpoi')
         .subscribe(response => {
           resolve(response.json())
         });
     });
   }
 
-  sendUpdatedBeacons(promise :Promise<any>) {
+  sendUpdatedPOI(promise :Promise<any>) {
     promise.then((data) => {
-      var beacons ={};
-      beacons["beacons"] = data;
-      this.http.post('https://followit-backend.herokuapp.com/api/updateBeacons', beacons).subscribe(res => {
+      var pois ={};
+      pois["pois"] = data;
+      this.http.post('https://followit-backend.herokuapp.com/api/updatePOIs', pois).subscribe(res => {
         console.log("HTTP post OK");
       });
     });

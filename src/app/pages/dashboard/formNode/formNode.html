@@ -10,11 +10,11 @@
     <!-- list of pois -->
     <div class="form-group">
       <label>Points of interest</label>
-      <div formArrayName="pois">
-          <div *ngFor="let poi of myForm.controls.pois.controls; let i=index">
+      <div formArrayName="poiID">
+          <div *ngFor="let poi of myForm.controls.poiID.controls; let i=index">
               <!-- address header, show remove button when more than one address available -->
               <div>
-                  <span *ngIf="myForm.controls.pois.controls.length > 1"
+                  <span *ngIf="myForm.controls.poiID.controls.length > 1"
                       (click)="removeStore(i)">
                   </span>
               </div>
@@ -34,7 +34,7 @@
         <!-- beacon -->
         <div class="form-group">
           <label>Beacon</label>
-          <select formControlName="beacon" class="form-control">
+          <select formControlName="beaconID" class="form-control">
             <option *ngFor="let b of beacons" value="{{b.beaconID}}" >{{b.name}}</option>
           </select>
         </div>
