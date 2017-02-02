@@ -34,6 +34,7 @@ export class FormNode {
         });
       this.node = nodeData;
 this.loadPOIs();
+console.log(this.myForm.controls["pois"]);
     });
   }
 
@@ -42,10 +43,16 @@ this.loadPOIs();
     control.removeAt(0);
 this.node["POI"].forEach(
       function (element) {
-        const control = <FormArray>this.myForm.controls['pois'];
-        control.push(this.initStore());
+        control.push(this.initStoreWithID(element));
       }.bind(this));
     }
+
+    initStoreWithID(givenId : string) {
+          return this._fb.group({
+              id: ['', Validators.required],
+              storedId : givenId
+          });
+      }
 
   initStore() {
         return this._fb.group({

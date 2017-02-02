@@ -29,7 +29,6 @@ export class Graph {
   }
 
   private _loadGraph() {
-    var lol = this.testService;
     this.cy = cytoscape({
       container: $('#cy')
     });
@@ -100,10 +99,10 @@ export class Graph {
           coreAsWell: true,
           onClickFunction: function (event) {
             var tabPOI=[];
-            tabPOI.push("??");
+            tabPOI.push("?");
             var data = {
               group: 'nodes',
-              POI: tabPOI
+              poiID: tabPOI
             };
 
             this.cy.add({

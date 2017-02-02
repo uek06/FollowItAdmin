@@ -24,8 +24,8 @@ export class GraphService {
         node["v"] = element.data.id;
         var value = {};
         value["label"] = "node " + element.data.id;
-        value["POI"] = element.data.POI;
-        value["beacon"] = element.data.beacon;
+        value["poiID"] = element.data.poiID;
+        value["beaconID"] = element.data.beaconID;
         var coord = {};
         coord["x"] = element.position.x;
         coord["y"] = element.position.y;

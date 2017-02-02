@@ -1,6 +1,6 @@
-
-  <div *ngIf="node">
+<div *ngIf="node">
     <form [formGroup]="myForm" (ngSubmit)="save(myForm)">
+
       <!-- node id -->
     <div class="form-group">
       <label for="inputId">Id</label>
@@ -20,7 +20,7 @@
               </div>
               <div [formGroupName]="i">
                 <select formControlName="id" class="form-control">
-                  <option *ngFor="let p of pois" [ngValue]="p._id" [selected]="poi.poi==p._id ? true : null" >{{p.poi}}</option>
+                  <option *ngFor="let p of pois" [ngValue]="p._id" [selected]="poi._value.storedId==p.poi ? true : null" >{{p.poi}}</option>
                 </select>
               </div>
           </div>

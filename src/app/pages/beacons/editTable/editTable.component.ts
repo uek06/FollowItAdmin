@@ -18,6 +18,8 @@ export class EditTable {
       addButtonContent: '<i class="ion-ios-plus-outline"></i>',
       createButtonContent: '<i class="ion-checkmark"></i>',
       cancelButtonContent: '<i class="ion-close"></i>',
+      confirmCreate: true
+
     },
     edit: {
       editButtonContent: '<i class="ion-edit"></i>',
@@ -60,6 +62,27 @@ export class EditTable {
     event.preventDefault();
     this.service.sendUpdatedBeacons(this.source.getElements());
   }
+
+  onCreateConfirm(event): void {
+     if (window.confirm('Are you sure you want to create?')) {
+       this.source.getElements().then((data) => {
+         var max = 0;
+         data.forEach(
+      function (element) {
+        if (element['beaconID'] > max) {
+          max = element['beaconID'];
+        }
+      }.bind(this));
+
+             event.newData['beaconID'] = ""+ ++max;
+             event.confirm.resolve(event.newData);
+       });
+
+     } else {
+       event.confirm.reject();
+     }
+   }
+
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
