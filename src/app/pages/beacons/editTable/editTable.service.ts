@@ -14,7 +14,6 @@ export class EditTableService {
         });
     });
   }
-
   sendUpdatedBeacons(promise :Promise<any>) {
     promise.then((data) => {
       var beacons ={};

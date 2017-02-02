@@ -26,11 +26,11 @@ export class FormNode {
       });
 
       this.myForm = this._fb.group({
-            id: ['', Validators.required],
+            id: [nodeData["id"], Validators.required],
             pois: this._fb.array([
                 this.initStore(),
             ]),
-            beacon: ['', Validators.required]
+            beacon: [nodeData["beaconID"], Validators.required]
         });
       this.node = nodeData;
 this.loadPOIs();
@@ -41,7 +41,7 @@ console.log(this.myForm.controls["pois"]);
   loadPOIs() {
     const control = <FormArray>this.myForm.controls['pois'];
     control.removeAt(0);
-this.node["POI"].forEach(
+this.node["poiID"].forEach(
       function (element) {
         control.push(this.initStoreWithID(element));
       }.bind(this));
@@ -49,14 +49,13 @@ this.node["POI"].forEach(
 
     initStoreWithID(givenId : string) {
           return this._fb.group({
-              id: ['', Validators.required],
-              storedId : givenId
+              _poiID: [givenId, Validators.required]
           });
       }
 
   initStore() {
         return this._fb.group({
-            id: ['', Validators.required]
+            _poiID: ['', Validators.required]
         });
     }
 
@@ -71,6 +70,6 @@ removeAddress(i: number) {
 }
   save(model: Object) {
         // call API to save customer
-        console.log(model);
+        console.log(model["value"]);
     }
 }

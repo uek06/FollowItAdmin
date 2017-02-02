@@ -3,8 +3,8 @@
 
       <!-- node id -->
     <div class="form-group">
-      <label for="inputId">Id</label>
-      <input type="text" class="form-control" id="inputId" formControlName="id" value="{{node.id}}">
+      <label>Id</label>
+      <input type="text" class="form-control" formControlName="id">
     </div>
 
     <!-- list of pois -->
@@ -19,8 +19,8 @@
                   </span>
               </div>
               <div [formGroupName]="i">
-                <select formControlName="id" class="form-control">
-                  <option *ngFor="let p of pois" [ngValue]="p._id" [selected]="poi._value.storedId==p.poi ? true : null" >{{p.poi}}</option>
+                <select formControlName="_poiID" class="form-control">
+                  <option *ngFor="let p of pois"  value="{{p.poiID}}" >{{p.poi}}</option>
                 </select>
               </div>
           </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
           <label>Beacon</label>
           <select formControlName="beacon" class="form-control">
-            <option *ngFor="let b of beacons" [ngValue]="b._id" [selected]="node.beacon==b._id ? true : null" >{{b.name}}</option>
+            <option *ngFor="let b of beacons" value="{{b.beaconID}}" >{{b.name}}</option>
           </select>
         </div>
         <br/>
