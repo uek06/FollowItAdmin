@@ -6,14 +6,18 @@ import {Observable,Subject} from "rxjs";
 export class TestService {
   myNodeObject$: Observable<Object>;
   private nodeObjectSubject: Subject<Object>;
+
+  myUpdatedNode$: Observable<Object>;
+  private updatedNodeSubject: Subject<Object>;
+
   constructor(private http: Http) {
     this.nodeObjectSubject = new Subject<Object>();
     this.myNodeObject$ = this.nodeObjectSubject.asObservable();
+
+    this.updatedNodeSubject = new Subject<Object>();
+    this.myUpdatedNode$ = this.updatedNodeSubject.asObservable();
   }
 
-  getData(): string {
-    return "getdata";
-  }
 
   getPOIs(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -33,7 +37,10 @@ export class TestService {
     });
   }
 
-  sendData(data : Object) {
+  sendNodeSelected(data : Object) {
     this.nodeObjectSubject.next(data);
+  }
+  sendUpdatedNode(data : Object) {
+    this.updatedNodeSubject.next(data);
   }
 }

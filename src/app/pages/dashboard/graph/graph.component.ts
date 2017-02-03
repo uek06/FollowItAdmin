@@ -26,6 +26,16 @@ export class Graph {
       this.content = data;
       this._loadGraph();
     });
+    this.testService.myUpdatedNode$.subscribe((nodeData: Object) => {
+          this.cy.getElementById(nodeData['id']).data("beaconID",nodeData['beaconID']);
+          var pois =[];
+          nodeData['poiID'].forEach(
+            function(element) {
+              pois.push(element["_poiID"]);
+            }.bind(this));
+          this.cy.getElementById(nodeData['id']).data("poiID",pois);
+          this.service.sendUpdatedGraph(this.cy.json());
+    });
   }
 
   private _loadGraph() {
@@ -37,7 +47,7 @@ export class Graph {
     this.cy.on('select', 'node', function(event){
       //var id = event.cyTarget.id();
       var data = event.cyTarget.data();
-      this.testService.sendData(data);
+      this.testService.sendNodeSelected(data);
     }.bind(this));
 
     this.loadContextMenus();

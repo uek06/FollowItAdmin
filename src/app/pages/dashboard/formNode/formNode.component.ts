@@ -9,66 +9,63 @@ import {TestService} from '../test.service';
   template: require('./formNode.html'),
 })
 export class FormNode {
-  node:Object;
-  pois : Array<Object>;
-  beacons : Array<Object>;
-   public myForm: FormGroup; // our form model
+  node: Object;
+  pois: Array<Object>;
+  beacons: Array<Object>;
+  public myForm: FormGroup; // our form model
 
   constructor(private service: TestService, private _fb: FormBuilder) {
     service.myNodeObject$.subscribe((nodeData: Object) => {
       this.service.getBeacons().then((data) => {
         this.beacons = data;
-
       });
       this.service.getPOIs().then((data) => {
         this.pois = data;
-
       });
-
       this.myForm = this._fb.group({
-            id: [nodeData["id"], Validators.required],
-            poiID: this._fb.array([
-                this.initStore(),
-            ]),
-            beaconID: nodeData["beaconID"]
-        });
+        id:  [{ value: nodeData["id"], disabled: true }, Validators.required],
+        poiID: this._fb.array([
+          this.initStore(),
+        ]),
+        beaconID: nodeData["beaconID"]
+      });
       this.node = nodeData;
-this.loadPOIs();
+      this.loadPOIs();
     });
   }
 
   loadPOIs() {
     const control = <FormArray>this.myForm.controls['poiID'];
     control.removeAt(0);
-this.node["poiID"].forEach(
-      function (element) {
+    this.node["poiID"].forEach(
+      function(element) {
         control.push(this.initStoreWithID(element));
       }.bind(this));
-    }
+  }
 
-    initStoreWithID(givenId : string) {
-          return this._fb.group({
-              _poiID: givenId
-          });
-      }
+  initStoreWithID(givenId: string) {
+    return this._fb.group({
+      _poiID: givenId
+    });
+  }
 
   initStore() {
-        return this._fb.group({
-            _poiID: ['', Validators.required]
-        });
-    }
+    return this._fb.group({
+      _poiID: ['', Validators.required]
+    });
+  }
 
-    addStore() {
+  addStore() {
     const control = <FormArray>this.myForm.controls['poiID'];
     control.push(this.initStore());
-}
+  }
 
-removeAddress(i: number) {
+  removeAddress(i: number) {
     const control = <FormArray>this.myForm.controls['poiID'];
     control.removeAt(i);
-}
+  }
   save(model: Object) {
-        // call API to save customer
-        console.log(model["value"]);
-    }
+    // call API to save customer
+    this.service.sendUpdatedNode(model["value"]);
+  }
 }
