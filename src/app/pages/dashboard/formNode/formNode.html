@@ -1,8 +1,7 @@
-
 <div *ngIf="node">
-    <form [formGroup]="myForm" (ngSubmit)="save(myForm); ">
+  <form [formGroup]="myForm" (ngSubmit)="save(myForm); ">
 
-      <!-- node id -->
+    <!-- node id -->
     <div class="form-group">
       <label>Id</label>
       <input type="text" class="form-control" formControlName="id">
@@ -12,37 +11,36 @@
     <div class="form-group">
       <label>Points of interest</label>
       <div formArrayName="poiID">
-          <div *ngFor="let poi of myForm.controls.poiID.controls; let i=index">
-              <!-- address header, show remove button when more than one address available -->
-              <div>
-                  <span *ngIf="myForm.controls.poiID.controls.length > 1"
-                      (click)="removeStore(i)">
-                  </span>
-              </div>
-              <div [formGroupName]="i">
-                <select formControlName="_poiID" class="form-control">
-                  <option *ngFor="let p of pois"  value="{{p.poiID}}" >{{p.poi}}</option>
-                </select>
-              </div>
+        <div *ngFor="let poi of myForm.controls.poiID.controls; let i=index">
+          <!-- address header, show remove button when more than one address available -->
+          <div class="panel-heading">
+            <span>Address</span>
+            <span class="pull-right" *ngIf="myForm.controls.poiID.controls.length > 1" (click)="removeAddress(i)">x</span>
           </div>
+          <div [formGroupName]="i">
+            <select formControlName="_poiID" class="form-control">
+                  <option *ngFor="let p of pois"  value="{{p.poiID}}" >{{p.poi}}</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
     <div>
-          <a (click)="addStore()" style="cursor: default">
+      <a (click)="addStore()" style="cursor: default">
             Add another store +
           </a>
-        </div>
-        <!-- beacon -->
-        <div class="form-group">
-          <label>Beacon</label>
-          <select formControlName="beaconID" class="form-control">
+    </div>
+    <!-- beacon -->
+    <div class="form-group">
+      <label>Beacon</label>
+      <select formControlName="beaconID" class="form-control">
             <option *ngFor="let b of beacons" value="{{b.beaconID}}" >{{b.name}}</option>
           </select>
-        </div>
-        <br/>
+    </div>
+    <br/>
     <button type="submit" class="btn btn-danger">Save node</button>
-    </form>
+  </form>
 </div>
 <div *ngIf="!node">
-Please select a node
+  Please select a node
 </div>

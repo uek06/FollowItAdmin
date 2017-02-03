@@ -27,7 +27,7 @@ export class Graph {
       this._loadGraph();
     });
     this.testService.myUpdatedNode$.subscribe((nodeData: Object) => {
-          this.cy.getElementById(nodeData['id']).data("beaconID",nodeData['beaconID']);
+          this.cy.getElementById(nodeData['originalID']).data("beaconID",nodeData['beaconID']);
           var pois =[];
           nodeData['poiID'].forEach(
             function(element) {
