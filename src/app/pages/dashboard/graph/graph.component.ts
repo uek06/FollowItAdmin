@@ -77,7 +77,7 @@ export class Graph {
     var fpoi = [];
     fpoi.push('Foyer côté ouest');
     this.cy.$('#f').data('POI', fpoi);*/
-
+    this.cy.$(':selected')[0].unselect();
     this.service.sendUpdatedGraph(this.cy.json());
   }
 
