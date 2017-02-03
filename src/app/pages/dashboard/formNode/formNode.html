@@ -14,8 +14,8 @@
         <div *ngFor="let poi of myForm.controls.poiID.controls; let i=index">
           <!-- address header, show remove button when more than one address available -->
           <div class="panel-heading">
-            <span>Address</span>
-            <span class="pull-right" *ngIf="myForm.controls.poiID.controls.length > 1" (click)="removeAddress(i)">x</span>
+            <a href="#" style="color:white" (click)="removeAddress(i)">
+              <i class="ion-close pull-right"></i></a>
           </div>
           <div [formGroupName]="i">
             <select formControlName="_poiID" class="form-control">
@@ -26,10 +26,11 @@
       </div>
     </div>
     <div>
-      <a (click)="addStore()" style="cursor: default">
-            Add another store +
+      <a href="#" (click)="addStore()" style="color:white">
+            Add another POI
           </a>
     </div>
+    <br/>
     <!-- beacon -->
     <div class="form-group">
       <label>Beacon</label>

@@ -1,6 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {GraphService} from './graph.service';
 import {TestService} from '../test.service';
+import {GlobalService} from '../../global.service';
 
 import {Input, Output, EventEmitter} from '@angular/core'
 
@@ -20,9 +21,9 @@ export class Graph {
   content: any; // real type to come later
   cy: any;
 
-  constructor(private service: GraphService, private testService: TestService) {
+  constructor(private service: GraphService, private testService: TestService, private globalService : GlobalService) {
 
-    this.service.getData().then((data) => {
+    this.globalService.getData().then((data) => {
       this.content = data;
       this._loadGraph();
     });
@@ -35,7 +36,7 @@ export class Graph {
             }.bind(this));
           this.cy.getElementById(nodeData['originalID']).data("poiID",pois);
           this.cy.getElementById(nodeData['originalID']).unselect();
-          this.service.sendUpdatedGraph(this.cy.json());
+          this.globalService.sendUpdatedGraph(this.cy.json());
           alert("Updated with succes");
     });
   }
@@ -81,7 +82,7 @@ export class Graph {
       function(element) {
         element.unselect();
       });
-    this.service.sendUpdatedGraph(this.cy.json());
+    this.globalService.sendUpdatedGraph(this.cy.json());
   }
 
   private loadContextMenus() {

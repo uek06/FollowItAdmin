@@ -6,10 +6,14 @@ import { NgaModule } from '../theme/nga.module';
 
 import { Pages } from './pages.component';
 
+import {GlobalService} from './global.service'
 
 @NgModule({
   imports: [CommonModule, NgaModule, routing],
-  declarations: [Pages]
+  declarations: [Pages],
+  providers: [
+    GlobalService
+  ]
 })
 export class PagesModule {
 }

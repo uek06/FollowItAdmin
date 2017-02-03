@@ -3,6 +3,8 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import { EditTableService } from './editTable.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
+import {GlobalService} from '../../global.service';
+
 @Component({
   selector: 'editTable',
   encapsulation: ViewEncapsulation.None,
@@ -52,7 +54,7 @@ export class EditTable {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(protected service: EditTableService) {
+  constructor(protected service: EditTableService, private globalService: GlobalService) {
     this.service.getData().then((data) => {
       this.source.load(data);
     });
@@ -60,32 +62,39 @@ export class EditTable {
 
   private clicked(event) {
     event.preventDefault();
-    this.service.sendUpdatedBeacons(this.source.getElements());
+
+
+    this.globalService.getData().then((data) => {
+        this.service.sendUpdatedBeacons(this.source.getElements(),data["temp"]);
+    });
+
+
   }
 
   onCreateConfirm(event): void {
-     if (window.confirm('Are you sure you want to create?')) {
-       this.source.getElements().then((data) => {
-         var max = 0;
-         data.forEach(
-      function (element) {
-        if (element['beaconID'] > max) {
-          max = element['beaconID'];
-        }
-      }.bind(this));
+    if (window.confirm('Are you sure you want to create?')) {
+      this.source.getElements().then((data) => {
+        var max = 0;
+        data.forEach(
+          function(element) {
+            if (element['beaconID'] > max) {
+              max = element['beaconID'];
+            }
+          }.bind(this));
 
-             event.newData['beaconID'] = ""+ ++max;
-             event.confirm.resolve(event.newData);
-       });
+        event.newData['beaconID'] = "" + ++max;
+        event.confirm.resolve(event.newData);
+      });
 
-     } else {
-       event.confirm.reject();
-     }
-   }
+    } else {
+      event.confirm.reject();
+    }
+  }
 
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
+
       event.confirm.resolve();
     } else {
       event.confirm.reject();
