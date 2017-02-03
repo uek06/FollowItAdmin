@@ -27,7 +27,8 @@ export class FormNode {
         poiID: this._fb.array([
           this.initStore(),
         ]),
-        beaconID: nodeData["beaconID"]
+        beaconID: nodeData["beaconID"],
+        originalID : nodeData["id"]
       });
       this.node = nodeData;
       this.loadPOIs();

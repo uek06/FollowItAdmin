@@ -33,8 +33,10 @@ export class Graph {
             function(element) {
               pois.push(element["_poiID"]);
             }.bind(this));
-          this.cy.getElementById(nodeData['id']).data("poiID",pois);
+          this.cy.getElementById(nodeData['originalID']).data("poiID",pois);
+          this.cy.getElementById(nodeData['originalID']).unselect();
           this.service.sendUpdatedGraph(this.cy.json());
+          alert("Updated with succes");
     });
   }
 
