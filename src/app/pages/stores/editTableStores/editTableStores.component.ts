@@ -3,6 +3,8 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import { EditTableStoresService } from './editTableStores.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
+import {GlobalService} from '../../global.service';
+
 @Component({
   selector: 'editTableStores',
   encapsulation: ViewEncapsulation.None,
@@ -43,35 +45,33 @@ export class EditTableStores {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(protected service: EditTableStoresService) {
-    this.service.getData().then((data) => {
+  constructor(protected service: EditTableStoresService,  private globalService: GlobalService) {
+    this.service.getPOIs().then((data) => {
       this.source.load(data);
     });
   }
 
   onCreateConfirm(event): void {
-     if (window.confirm('Are you sure you want to create?')) {
-       this.source.getElements().then((data) => {
-         var max = 0;
-         data.forEach(
-      function (element) {
-        if (element['poiID'] > max) {
-          max = element['poiID'];
-        }
-      }.bind(this));
+    this.source.getElements().then((data) => {
+      var max = 0;
+      data.forEach(
+        function(element) {
+          if (element['poiID'] > max) {
+            max = element['poiID'];
+          }
+        }.bind(this));
 
-             event.newData['poiID'] = ""+ ++max;
-             event.confirm.resolve(event.newData);
-       });
+      event.newData['poiID'] = "" + ++max;
+      event.confirm.resolve(event.newData);
+    });
 
-     } else {
-       event.confirm.reject();
-     }
-   }
+  }
 
   private clicked(event) {
     event.preventDefault();
-    this.service.sendUpdatedPOI(this.source.getElements());
+    this.globalService.getData().then((data) => {
+      this.service.sendUpdatedPOI(this.source.getElements(), data["temp"]);
+    });
   }
 
   onDeleteConfirm(event): void {

@@ -7,7 +7,7 @@ export class EditTableService {
 
   }
 
-  getData(): Promise<any> {
+  getBeacons(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.get('https://followit-backend.herokuapp.com/api/getAllBeacons')
         .subscribe(response => {
@@ -22,7 +22,6 @@ export class EditTableService {
         function(element) {
           newIDs.push(element["beaconID"]);
         });
-      //var temp2 = temp;
       temp["elements"]["nodes"].forEach(
         function(element) {
           if ($.inArray(element['data']['beaconID'], newIDs) < 0) {
