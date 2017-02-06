@@ -16,22 +16,5 @@
   </div>
 </div>
 <div class="button-wrapper">
-  <button (click)="clicked($event);smModal.show()" type="button" class="btn btn-success">Save modifications</button>
-</div>
-
-<!-- Small modal -->
-<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button class="close" aria-label="Close" (click)="smModal.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Well done</h4>
-      </div>
-      <div class="modal-body">
-          Your modifications have been updated with success.
-      </div>
-    </div>
-  </div>
+  <button (click)="clicked($event)" type="button" class="btn btn-success">Save modifications</button>
 </div>

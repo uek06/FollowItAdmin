@@ -1,4 +1,5 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewContainerRef, ViewEncapsulation} from '@angular/core';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 import { EditTableService } from './editTable.service';
 import { LocalDataSource } from '../../ng2-smart-table/build/ng2-smart-table';
@@ -13,7 +14,7 @@ import {GlobalService} from '../../global.service';
 })
 export class EditTable {
 
-  public uploadInProgress:boolean = false;
+  inProgress: boolean = false;
 
   query: string = '';
 
@@ -38,7 +39,7 @@ export class EditTable {
       name: {
         title: 'Name',
         type: 'string',
-        sortDirection	: 'asc'
+        sortDirection: 'asc'
       },
       UUID: {
         title: 'UUID',
@@ -57,7 +58,8 @@ export class EditTable {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(protected service: EditTableService, private globalService: GlobalService) {
+  constructor(protected service: EditTableService, private globalService: GlobalService, public modal: Modal, vcRef: ViewContainerRef) {
+    modal.overlay.defaultViewContainer = vcRef;
     this.service.getBeacons().then((data) => {
       this.source.load(data);
     });
@@ -65,11 +67,15 @@ export class EditTable {
 
   private clicked(event) {
     event.preventDefault();
-
-    this.globalService.getData().then((data) => {
-      this.service.sendUpdatedBeacons(this.source.getAll(), data["temp"]);
+    this.inProgress = true;
+    this.globalService.getData().then((root) => {
+      this.source.getAll().then((beacons) => {
+        this.service.sendUpdatedBeacons(beacons, root["temp"]).then(() => {
+          this.inProgress = false;
+          this.showAlert();
+        });
+      });
     });
-
 
   }
 
@@ -97,5 +103,14 @@ export class EditTable {
     } else {
       event.confirm.reject();
     }
+  }
+
+  showAlert() {
+    this.modal.alert()
+      .size('sm')
+      .showClose(true)
+      .title('Well done')
+      .body('Updated with success')
+      .open();
   }
 }

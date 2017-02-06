@@ -10,7 +10,9 @@ import { EditTable } from './editTable/editTable.component';
 import { EditTableService } from './editTable/editTable.service';
 import { Ng2SmartTableModule } from './../ng2-smart-table/build/ng2-smart-table';
 
-import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
     NgaModule,
     routing,
     Ng2SmartTableModule,
-    ModalModule
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   declarations: [
     EditTable,

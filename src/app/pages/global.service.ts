@@ -7,7 +7,7 @@ export class GlobalService {
 
   constructor(private http: Http) {
   }
-  sendUpdatedGraph(cyObject: Array<Object>) {
+  sendUpdatedGraph(cyObject: Array<Object>) :Promise<any>{
     var options = {};
     options["directed"] = true;
     options["multigraph"] = false;
@@ -58,9 +58,11 @@ export class GlobalService {
     jsonToSend["edges"] = edges;
     jsonToSend["temp"] = cyObject;
 
-
-    this.http.post('https://followit-backend.herokuapp.com/api/updateGraph', jsonToSend).subscribe(res => {
-      console.log("HTTP post OK");
+    return new Promise((resolve, reject) => {
+      this.http.post('https://followit-backend.herokuapp.com/api/updateGraph', jsonToSend)
+        .subscribe(response => {
+          resolve("OK")
+        });
     });
   }
 

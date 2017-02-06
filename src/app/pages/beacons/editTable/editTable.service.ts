@@ -15,8 +15,8 @@ export class EditTableService {
         });
     });
   }
-  sendUpdatedBeacons(promise: Promise<any>, temp: Array<Object>) {
-    promise.then((data) => {
+  sendUpdatedBeacons(data: Array<Object>, temp: Array<Object>): Promise<any> {
+    return new Promise((resolve, reject) => {
       var newIDs = [];
       data.forEach(
         function(element) {
@@ -28,14 +28,18 @@ export class EditTableService {
             delete element['data']['beaconID'];
           }
         });
-      this.globalService.sendUpdatedGraph(temp);
-
-      var beacons = {};
-      beacons["beacons"] = data;
-      this.http.post('https://followit-backend.herokuapp.com/api/updateBeacons', beacons).subscribe(res => {
-        console.log("HTTP post OK");
+      this.globalService.sendUpdatedGraph(temp).then(() => {
+        var beacons = {};
+        beacons["beacons"] = data;
+        this.http.post('https://followit-backend.herokuapp.com/api/updateBeacons', beacons)
+          .subscribe(response => {
+            resolve("OK")
+          });
       });
+
+
     });
+
 
   }
 }

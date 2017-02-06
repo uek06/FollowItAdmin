@@ -16,8 +16,8 @@ export class EditTableStoresService {
     });
   }
 
-  sendUpdatedPOI(promise: Promise<any>, temp: Array<Object>) {
-    promise.then((data) => {
+  sendUpdatedPOI(data: Array<Object>, temp: Array<Object>): Promise<any> {
+    return new Promise((resolve, reject) => {
       var newIDs = [];
       data.forEach(
         function(element) {
@@ -38,13 +38,20 @@ export class EditTableStoresService {
             });
 
         });
-      this.globalService.sendUpdatedGraph(temp);
-      var pois = {};
-      pois["pois"] = data;
-      this.http.post('https://followit-backend.herokuapp.com/api/updatePOIs', pois).subscribe(res => {
-        console.log("HTTP post OK");
+
+      this.globalService.sendUpdatedGraph(temp).then(() => {
+        var pois = {};
+        pois["pois"] = data;
+        this.http.post('https://followit-backend.herokuapp.com/api/updatePOIs', pois)
+          .subscribe(response => {
+            resolve("OK")
+          });
       });
+
     });
+
+
+
 
   }
 }

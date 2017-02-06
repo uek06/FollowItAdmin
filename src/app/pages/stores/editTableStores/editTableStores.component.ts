@@ -1,5 +1,6 @@
-import {Component, ViewEncapsulation, ViewChild, Input, Output, EventEmitter, ElementRef, Renderer} from '@angular/core';
+import {Component,ViewContainerRef, ViewEncapsulation, ViewChild, Input, Output, EventEmitter, ElementRef, Renderer} from '@angular/core';
 import {Ng2Uploader} from 'ng2-uploader/ng2-uploader';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 import { EditTableStoresService } from './editTableStores.service';
 import { LocalDataSource } from '../../ng2-smart-table/build/ng2-smart-table';
@@ -73,7 +74,8 @@ export class EditTableStores {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private storesService: StoresService, protected service: EditTableStoresService, private globalService: GlobalService, private renderer: Renderer, protected _uploader: Ng2Uploader) {
+  constructor(private storesService: StoresService, protected service: EditTableStoresService, private globalService: GlobalService, private renderer: Renderer, protected _uploader: Ng2Uploader, public modal: Modal, vcRef: ViewContainerRef) {
+  modal.overlay.defaultViewContainer = vcRef;
     this.service.getPOIs().then((data) => {
       this.source.load(data);
     });
@@ -101,9 +103,16 @@ export class EditTableStores {
 
   private clicked(event) {
     event.preventDefault();
-    this.globalService.getData().then((data) => {
-      this.service.sendUpdatedPOI(this.source.getAll(), data["temp"]);
+    this.inProgress = true;
+    this.globalService.getData().then((root) => {
+      this.source.getAll().then((pois) => {
+        this.service.sendUpdatedPOI(pois, root["temp"]).then(() => {
+          this.inProgress = false;
+          this.showAlert();
+        });
+      });
     });
+
   }
 
 
@@ -124,6 +133,15 @@ export class EditTableStores {
     this.storesService.sendEndSelection();
     event.confirm.resolve(event.newData);
     this.pictureHasBeenUpdated = false;
+  }
+
+  showAlert() {
+    this.modal.alert()
+      .size('sm')
+      .showClose(true)
+      .title('Well done')
+      .body('Updated with success')
+      .open();
   }
 
 
