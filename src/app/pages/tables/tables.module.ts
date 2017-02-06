@@ -7,7 +7,7 @@ import { routing }       from './tables.routing';
 import { Tables } from './tables.component';
 import { BasicTables } from './components/basicTables/basicTables.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2SmartTableModule } from './../ng2-smart-table/build/ng2-smart-table';
 import { BasicTablesService } from './components/basicTables/basicTables.service';
 import { ResponsiveTable } from './components/basicTables/components/responsiveTable';
 import { StripedTable } from './components/basicTables/components/stripedTable';

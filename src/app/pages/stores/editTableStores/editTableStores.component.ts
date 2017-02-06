@@ -1,17 +1,37 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation, ViewChild, Input, Output, EventEmitter, ElementRef, Renderer} from '@angular/core';
+import {Ng2Uploader} from 'ng2-uploader/ng2-uploader';
 
 import { EditTableStoresService } from './editTableStores.service';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '../../ng2-smart-table/build/ng2-smart-table';
 
 import {GlobalService} from '../../global.service';
+import {StoresService} from '../stores.service';
 
 @Component({
   selector: 'editTableStores',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./editTableStores.scss')],
-  template: require('./editTableStores.html')
+  template: require('./editTableStores.html'),
+  providers: [Ng2Uploader]
 })
 export class EditTableStores {
+  @Input() defaultPicture: string = '';
+  @Input() picture: string = '';
+
+  @Input() uploaderOptions: any = {};
+  @Input() canDelete: boolean = true;
+
+  onUpload: EventEmitter<any> = new EventEmitter();
+  onUploadCompleted: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('fileUpload') protected _fileUpload: ElementRef;
+
+  public uploadInProgress: boolean = false;
+
+  currentPoiPicture: string;
+  pictureHasBeenUpdated:boolean = false;
+
+  public inProgress: boolean = false;
 
   query: string = '';
 
@@ -26,6 +46,7 @@ export class EditTableStores {
       editButtonContent: '<i class="ion-edit"></i>',
       saveButtonContent: '<i class="ion-checkmark"></i>',
       cancelButtonContent: '<i class="ion-close"></i>',
+      confirmSave: true
     },
     delete: {
       deleteButtonContent: '<i class="ion-trash-a"></i>',
@@ -34,20 +55,31 @@ export class EditTableStores {
     columns: {
       poi: {
         title: 'Name',
-        type: 'string'
+        type: 'string',
+        sortDirection	: 'asc'
       },
       discount: {
         title: 'Discount',
         type: 'string'
+      },
+      image: {
+        title: 'Image',
+        type: 'html',
+        editable: false,
+        valuePrepareFunction: (value) => { return '<img class="vignette" src="' + value + '" />' }
       }
     }
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(protected service: EditTableStoresService,  private globalService: GlobalService) {
+  constructor(private storesService: StoresService, protected service: EditTableStoresService, private globalService: GlobalService, private renderer: Renderer, protected _uploader: Ng2Uploader) {
     this.service.getPOIs().then((data) => {
       this.source.load(data);
+    });
+    this.storesService.myUpdatedPicture$.subscribe((newPictureData: string) => {
+      this.pictureHasBeenUpdated = true;
+      this.currentPoiPicture = newPictureData;
     });
   }
 
@@ -70,9 +102,10 @@ export class EditTableStores {
   private clicked(event) {
     event.preventDefault();
     this.globalService.getData().then((data) => {
-      this.service.sendUpdatedPOI(this.source.getElements(), data["temp"]);
+      this.service.sendUpdatedPOI(this.source.getAll(), data["temp"]);
     });
   }
+
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
@@ -81,4 +114,17 @@ export class EditTableStores {
       event.confirm.reject();
     }
   }
+  onEdit(event): void {
+    this.storesService.sendPOISelected(event.data);
+  }
+  onEditConfirm(event): void {
+    if (this.pictureHasBeenUpdated) {
+      event.newData['image'] = this.currentPoiPicture;
+    }
+    this.storesService.sendEndSelection();
+    event.confirm.resolve(event.newData);
+    this.pictureHasBeenUpdated = false;
+  }
+
+
 }

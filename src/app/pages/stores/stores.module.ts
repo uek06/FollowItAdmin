@@ -8,7 +8,10 @@ import { routing }       from './stores.routing';
 
 import { EditTableStores } from './editTableStores/editTableStores.component';
 import { EditTableStoresService } from './editTableStores/editTableStores.service';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2SmartTableModule } from './../ng2-smart-table/build/ng2-smart-table';
+
+import { PictureUploader } from './pictureUploader/pictureUploader.component';
+import { StoresService } from './stores.service';
 
 import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
@@ -23,10 +26,12 @@ import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
   ],
   declarations: [
     EditTableStores,
-    Stores
+    Stores,
+    PictureUploader
   ],
   providers: [
-    EditTableStoresService
+    EditTableStoresService,
+    StoresService
   ]
 })
 export default class StoresModule {}

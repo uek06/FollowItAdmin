@@ -21,11 +21,10 @@ export class EditTableStoresService {
       var newIDs = [];
       data.forEach(
         function(element) {
-            newIDs.push(element["poiID"]);
+          newIDs.push(element["poiID"]);
         });
       temp["elements"]["nodes"].forEach(
         function(element) {
-
           var idToRemove = [];
           element['data']["poiID"].forEach(
             function(id) {

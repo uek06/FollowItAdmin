@@ -1,7 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 
 import { SmartTablesService } from './smartTables.service';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from './../../../ng2-smart-table/build/ng2-smart-table';
 
 @Component({
   selector: 'basic-tables',

@@ -9,6 +9,12 @@
 </div>
 
 <br/>
+<div class="loading" *ngIf="inProgress">
+  <div class="spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+</div>
 <div class="button-wrapper">
   <button (click)="clicked($event);smModal.show()" type="button" class="btn btn-success">Save modifications</button>
 </div>

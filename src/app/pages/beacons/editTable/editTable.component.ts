@@ -1,7 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 
 import { EditTableService } from './editTable.service';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '../../ng2-smart-table/build/ng2-smart-table';
 
 import {GlobalService} from '../../global.service';
 
@@ -12,6 +12,8 @@ import {GlobalService} from '../../global.service';
   template: require('./editTable.html')
 })
 export class EditTable {
+
+  public uploadInProgress:boolean = false;
 
   query: string = '';
 
@@ -35,7 +37,8 @@ export class EditTable {
     columns: {
       name: {
         title: 'Name',
-        type: 'string'
+        type: 'string',
+        sortDirection	: 'asc'
       },
       UUID: {
         title: 'UUID',
@@ -64,7 +67,7 @@ export class EditTable {
     event.preventDefault();
 
     this.globalService.getData().then((data) => {
-      this.service.sendUpdatedBeacons(this.source.getElements(), data["temp"]);
+      this.service.sendUpdatedBeacons(this.source.getAll(), data["temp"]);
     });
 
 
