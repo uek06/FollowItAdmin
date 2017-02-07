@@ -37,8 +37,11 @@ export class Graph {
         }.bind(this));
       this.cy.getElementById(nodeData['originalID']).data("poiID", pois);
       this.cy.getElementById(nodeData['originalID']).unselect();
-      this.globalService.sendUpdatedGraph(this.cy.json());
-      alert("Updated with succes");
+      this.globalService.sendUpdatedGraph(this.cy.json()).then((data) => {
+
+        alert("Updated with succes");
+      });
+
     });
   }
 
@@ -83,7 +86,10 @@ export class Graph {
       function(element) {
         element.unselect();
       });
-    this.globalService.sendUpdatedGraph(this.cy.json());
+      this.globalService.sendUpdatedGraph(this.cy.json()).then((data) => {
+
+        //alert("Updated with succes");
+      });
   }
 
   private loadContextMenus() {
