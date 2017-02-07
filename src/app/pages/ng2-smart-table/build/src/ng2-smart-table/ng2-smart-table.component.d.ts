@@ -9,6 +9,7 @@ export declare class Ng2SmartTableComponent implements OnChanges {
     userRowSelect: EventEmitter<any>;
     delete: EventEmitter<any>;
     edit: EventEmitter<any>;
+    cancel: EventEmitter<any>;
     create: EventEmitter<any>;
     deleteConfirm: EventEmitter<any>;
     editConfirm: EventEmitter<any>;
@@ -22,6 +23,7 @@ export declare class Ng2SmartTableComponent implements OnChanges {
     onUserSelectRow(row: Row): void;
     onSelectRow(row: Row): void;
     onEdit(row: Row, event: any): boolean;
+    onCancel(): boolean;
     onDelete(row: Row, event: any): boolean;
     onCreate(row: Row, event: any): boolean;
     onSave(row: Row, event: any): boolean;

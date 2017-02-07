@@ -19,6 +19,7 @@ export class EditTable {
   query: string = '';
 
   settings = {
+    noDataMessage : "Please wait...",
     add: {
       addButtonContent: '<i class="ion-ios-plus-outline"></i>',
       createButtonContent: '<i class="ion-checkmark"></i>',

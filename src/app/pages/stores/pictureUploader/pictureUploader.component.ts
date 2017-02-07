@@ -25,11 +25,13 @@ export class PictureUploader {
 
   constructor(private storesService: StoresService, private renderer: Renderer, protected _uploader: Ng2Uploader) {
     storesService.myPOIObject$.subscribe((poiData: Object) => {
-      this.picture = poiData["image"];
+      if (poiData["image"] != null)
+        this.picture = poiData["image"];
       this.onEdit = true;
     });
     storesService.myEndSelection$.subscribe(() => {
       this.onEdit = false;
+      this.picture ='';
     });
   }
 

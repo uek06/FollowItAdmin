@@ -37,6 +37,7 @@ export class EditTableStores {
   query: string = '';
 
   settings = {
+    noDataMessage : "Please wait...",
     add: {
       addButtonContent: '<i class="ion-ios-plus-outline"></i>',
       createButtonContent: '<i class="ion-checkmark"></i>',
@@ -72,6 +73,7 @@ export class EditTableStores {
         title: 'Image',
         type: 'html',
         editable: false,
+        sort : false,
         valuePrepareFunction: (value) => { return '<img class="vignette" src="' + value + '" />' }
       }
     }
@@ -91,6 +93,7 @@ export class EditTableStores {
   }
 
   onCreateConfirm(event): void {
+    //find ID
     var max = 0;
     this.source.getAll().then((data) => {
       data.forEach(
@@ -99,8 +102,13 @@ export class EditTableStores {
             max = element['poiID'];
           }
         });
-
       event.newData['poiID'] = "" + ++max;
+      //picture
+      if (this.pictureHasBeenUpdated) {
+        event.newData['image'] = this.currentPoiPicture;
+      }
+      this.storesService.sendEndSelection();
+      this.pictureHasBeenUpdated = false;
       event.confirm.resolve(event.newData);
     });
 
@@ -130,6 +138,12 @@ export class EditTableStores {
   }
   onEdit(event): void {
     this.storesService.sendPOISelected(event.data);
+  }
+  onCreate(event): void {
+    this.storesService.sendPOISelected({});
+  }
+  onCancel(): void {
+    this.storesService.sendEndSelection();
   }
   onEditConfirm(event): void {
     if (this.pictureHasBeenUpdated) {

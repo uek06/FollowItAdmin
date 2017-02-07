@@ -2,7 +2,7 @@
 
   <div class="row">
     <ba-card title="Manage Stores" baCardClass="with-scroll">
-      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (createConfirm)="onCreateConfirm($event)" (edit)="onEdit($event)" (editConfirm)="onEditConfirm($event)"></ng2-smart-table>
+      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (createConfirm)="onCreateConfirm($event)" (edit)="onEdit($event)" (editConfirm)="onEditConfirm($event)" (create)="onCreate($event)" (cancel)="onCancel()"></ng2-smart-table>
     </ba-card>
   </div>
 
