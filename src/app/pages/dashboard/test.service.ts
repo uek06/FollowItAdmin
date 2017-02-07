@@ -10,12 +10,18 @@ export class TestService {
   myUpdatedNode$: Observable<Object>;
   private updatedNodeSubject: Subject<Object>;
 
+  myEndLoading$: Observable<Object>;
+  private endLoadingSubject: Subject<Object>;
+
   constructor(private http: Http) {
     this.nodeObjectSubject = new Subject<Object>();
     this.myNodeObject$ = this.nodeObjectSubject.asObservable();
 
     this.updatedNodeSubject = new Subject<Object>();
     this.myUpdatedNode$ = this.updatedNodeSubject.asObservable();
+
+    this.endLoadingSubject = new Subject<Object>();
+    this.myEndLoading$ = this.endLoadingSubject.asObservable();
   }
 
 
@@ -42,5 +48,8 @@ export class TestService {
   }
   sendUpdatedNode(data : Object) {
     this.updatedNodeSubject.next(data);
+  }
+  sendEndLoading() {
+    this.endLoadingSubject.next();
   }
 }

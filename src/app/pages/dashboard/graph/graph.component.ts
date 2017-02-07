@@ -1,7 +1,8 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component,ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {GraphService} from './graph.service';
 import {TestService} from '../test.service';
 import {GlobalService} from '../../global.service';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 import {Input, Output, EventEmitter} from '@angular/core'
 
@@ -18,11 +19,12 @@ import {jquery} from "./graph.loader";
   template: require('./graph.html')
 })
 export class Graph {
+  inProgress: boolean = false;
   content: any; // real type to come later
   cy: any;
 
-  constructor(private service: GraphService, private testService: TestService, private globalService: GlobalService) {
-
+  constructor(private service: GraphService, private testService: TestService, private globalService: GlobalService, public modal: Modal, vcRef: ViewContainerRef) {
+  modal.overlay.defaultViewContainer = vcRef;
     this.globalService.getData().then((data) => {
       this.content = data;
       this._loadGraph();
@@ -38,7 +40,8 @@ export class Graph {
       this.cy.getElementById(nodeData['originalID']).data("poiID", pois);
       this.cy.getElementById(nodeData['originalID']).unselect();
       this.globalService.sendUpdatedGraph(this.cy.json()).then((data) => {
-        alert("Updated with succes");
+        this.testService.sendEndLoading();
+        this.showAlert();
       });
 
     });
@@ -81,13 +84,14 @@ export class Graph {
         var fpoi = [];
         fpoi.push('Foyer côté ouest');
         this.cy.$('#f').data('POI', fpoi);*/
+        this.inProgress=true;
     this.cy.$(':selected').forEach(
       function(element) {
         element.unselect();
       });
       this.globalService.sendUpdatedGraph(this.cy.json()).then((data) => {
-
-        //alert("Updated with succes");
+        this.inProgress=false;
+        this.showAlert();
       });
   }
 
@@ -204,6 +208,15 @@ export class Graph {
 
     edgehandles(cytoscape); // register extension
     this.cy.edgehandles(defaults);
+  }
+
+  showAlert() {
+    this.modal.alert()
+      .size('sm')
+      .showClose(true)
+      .title('Well done')
+      .body('Updated with success')
+      .open();
   }
 
 }

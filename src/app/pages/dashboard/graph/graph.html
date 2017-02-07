@@ -1,37 +1,19 @@
-<!--<div class="row graph">-->
+
 <div id="cy"></div>
-<!--  <ba-card *ngFor="let chart of charts" class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
 
-    <div class="pie-chart-item">
-      <div class="chart" [attr.data-rel]="chart.color" data-percent="60">
-        <span class="percent"></span>
-      </div>
-      <div class="description">
-        <div>{{ chart.description }}</div>
-        <div class="description-stats">{{ chart.stats }}</div>
-      </div>
-      <i class="chart-icon i-{{ chart.icon }}"></i>
-    </div>
-
-  </ba-card>-->
-<!--</div>-->
 <br/>
-<div class="button-wrapper">
-  <button (click)="clicked($event);smModal.show()" type="button" class="btn btn-success">Save modifications</button>
-</div>
-
-<!-- Small modal -->
-<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button class="close" aria-label="Close" (click)="smModal.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Well done</h4>
-      </div>
-      <div class="modal-body">
-          Your modifications have been updated with success.
+<br/>
+<div class="row">
+  <div class="col-md-3">
+    <div class="button-wrapper">
+      <button (click)="clicked($event)" type="button" class="btn btn-success">Save modifications</button>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="loading" *ngIf="inProgress">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
       </div>
     </div>
   </div>

@@ -14,7 +14,8 @@ import { FormNode } from './formNode';
 import { GraphService } from './graph/graph.service';
 import {TestService} from './test.service'
 
-import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
     ReactiveFormsModule,
     NgaModule,
     routing,
-    ModalModule
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   declarations: [
     Graph,

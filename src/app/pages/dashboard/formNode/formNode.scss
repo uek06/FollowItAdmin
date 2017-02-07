@@ -1,25 +1,56 @@
 
 @import "../../../theme/sass/conf/conf";
-.modal {
-  padding-top: 300px;
 
-  .modal-content {
-    color: $dropdown-text;
+.loading {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+}
+.spinner {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
 
-    .modal-header {
-      border: none;
-    }
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #fff;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
 
-    .modal-footer {
-      border: none;
-    }
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
 
-    .close {
-      outline: none;
-    }
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% {
+    -webkit-transform: scale(0.0)
+  }
+  50% {
+    -webkit-transform: scale(1.0)
   }
 }
 
-.modal-buttons .btn {
-  margin-right: 20px;
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  }
+  50% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
 }

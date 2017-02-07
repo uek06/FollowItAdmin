@@ -9,12 +9,16 @@ import {TestService} from '../test.service';
   template: require('./formNode.html'),
 })
 export class FormNode {
+  inProgress: boolean = false;
   node: Object;
   pois: Array<Object>;
   beacons: Array<Object>;
   public myForm: FormGroup; // our form model
 
   constructor(private service: TestService, private _fb: FormBuilder) {
+    service.myEndLoading$.subscribe(() => {
+      this.inProgress =false;
+    });
     service.myNodeObject$.subscribe((nodeData: Object) => {
       this.service.getBeacons().then((data) => {
         this.beacons = data;
@@ -67,6 +71,7 @@ export class FormNode {
   }
   save(model: Object) {
     // call API to save customer
-    this.service.sendUpdatedNode(model["value"]);
+    this.inProgress = true;
+  this.service.sendUpdatedNode(model["value"]);
   }
 }

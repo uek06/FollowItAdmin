@@ -39,7 +39,23 @@
           </select>
     </div>
     <br/>
-    <button type="submit" class="btn btn-danger">Save node</button>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="button-wrapper">
+            <button type="submit" class="btn btn-danger">Save node</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="loading" *ngIf="inProgress">
+          <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </form>
 </div>
 <div *ngIf="!node">

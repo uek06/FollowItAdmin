@@ -36,6 +36,11 @@ export class EditTable {
       confirmDelete: true
     },
     columns: {
+      beaconID: {
+        title: 'ID',
+        type: 'string',
+        editable : false
+      },
       name: {
         title: 'Name',
         type: 'string',
