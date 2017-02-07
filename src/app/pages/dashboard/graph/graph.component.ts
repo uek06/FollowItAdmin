@@ -1,4 +1,4 @@
-import {Component,ViewContainerRef, ViewEncapsulation} from '@angular/core';
+import {Component, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {GraphService} from './graph.service';
 import {TestService} from '../test.service';
 import {GlobalService} from '../../global.service';
@@ -24,7 +24,7 @@ export class Graph {
   cy: any;
 
   constructor(private service: GraphService, private testService: TestService, private globalService: GlobalService, public modal: Modal, vcRef: ViewContainerRef) {
-  modal.overlay.defaultViewContainer = vcRef;
+    modal.overlay.defaultViewContainer = vcRef;
     this.globalService.getData().then((data) => {
       this.content = data;
       this._loadGraph();
@@ -54,7 +54,6 @@ export class Graph {
     this.cy.json(this.content.temp);
 
     this.cy.on('select', 'node', function(event) {
-      //var id = event.cyTarget.id();
       var data = event.cyTarget.data();
       this.testService.sendNodeSelected(data);
     }.bind(this));
@@ -66,33 +65,15 @@ export class Graph {
 
   private clicked(event) {
     event.preventDefault();
-    /*    var apoi = [];
-        apoi.push('Bat forum');
-        this.cy.$('#a').data('POI', apoi);
-        var bpoi = [];
-        bpoi.push('RDC Bat Ouest');
-        this.cy.$('#b').data('POI', bpoi);
-        var cpoi = [];
-        cpoi.push('Intersection c');
-        this.cy.$('#c').data('POI', cpoi);
-        var dpoi = [];
-        dpoi.push('Parking prof');
-        this.cy.$('#d').data('POI', dpoi);
-        var epoi = [];
-        epoi.push('Foyer côté est');
-        this.cy.$('#e').data('POI', epoi);
-        var fpoi = [];
-        fpoi.push('Foyer côté ouest');
-        this.cy.$('#f').data('POI', fpoi);*/
-        this.inProgress=true;
+    this.inProgress = true;
     this.cy.$(':selected').forEach(
       function(element) {
         element.unselect();
       });
-      this.globalService.sendUpdatedGraph(this.cy.json()).then((data) => {
-        this.inProgress=false;
-        this.showAlert();
-      });
+    this.globalService.sendUpdatedGraph(this.cy.json()).then((data) => {
+      this.inProgress = false;
+      this.showAlert();
+    });
   }
 
   private loadContextMenus() {
@@ -106,17 +87,6 @@ export class Graph {
           onClickFunction: function(event) {
             event.cyTarget.remove();
           },
-          hasTrailingDivider: true
-        },
-        {
-          id: 'rename',
-          title: 'rename',
-          selector: 'node',
-          onClickFunction: function(event) {
-            console.log(event.cyTarget.id());
-            //this.cy.$('#a').data('label', 'newName');
-            //this.cy.$('#a').data('id', 'newName')
-          }.bind(this),
           hasTrailingDivider: true
         },
         {
