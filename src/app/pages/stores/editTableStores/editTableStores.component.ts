@@ -54,6 +54,11 @@ export class EditTableStores {
       confirmDelete: true
     },
     columns: {
+      poiID: {
+        title: 'ID',
+        type: 'string',
+        editable: false,
+      },
       poi: {
         title: 'Name',
         type: 'string',
@@ -86,14 +91,14 @@ export class EditTableStores {
   }
 
   onCreateConfirm(event): void {
-    this.source.getElements().then((data) => {
-      var max = 0;
+    var max = 0;
+    this.source.getAll().then((data) => {
       data.forEach(
         function(element) {
-          if (element['poiID'] > max) {
+          if (parseInt(element['poiID']) > max) {
             max = element['poiID'];
           }
-        }.bind(this));
+        });
 
       event.newData['poiID'] = "" + ++max;
       event.confirm.resolve(event.newData);

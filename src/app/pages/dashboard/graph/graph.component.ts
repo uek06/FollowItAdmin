@@ -38,7 +38,6 @@ export class Graph {
       this.cy.getElementById(nodeData['originalID']).data("poiID", pois);
       this.cy.getElementById(nodeData['originalID']).unselect();
       this.globalService.sendUpdatedGraph(this.cy.json()).then((data) => {
-
         alert("Updated with succes");
       });
 
