@@ -20,6 +20,7 @@ const routes: Routes = [
       { path: 'beacons', loadChildren: () => System.import('./beacons/beacons.module') },
       { path: 'editors', loadChildren: () => System.import('./editors/editors.module') },
       //{ path: 'components', loadChildren: () => System.import('./components/components.module') }
+      { path: 'stats', loadChildren: () => System.import('./stats/stats.module') },
       { path: 'charts', loadChildren: () => System.import('./charts/charts.module') },
       { path: 'ui', loadChildren: () => System.import('./ui/ui.module') },
       { path: 'forms', loadChildren: () => System.import('./forms/forms.module') },

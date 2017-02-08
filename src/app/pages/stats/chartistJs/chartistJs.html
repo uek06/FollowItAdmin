@@ -1,0 +1,31 @@
+<section class="chartist">
+  <div class="row">
+    <div class="col-md-6 ">
+      <ba-card title="Discounts" baCardClass="with-scroll">
+        <h5>Number of people who used a discount</h5>
+        <ba-chartist-chart baChartistChartClass="ct-chart"
+                           baChartistChartType="Line"
+                           [baChartistChartData]="data['simpleLineData']"
+                           [baChartistChartOptions]="data['simpleLineOptions']">
+        </ba-chartist-chart>
+      </ba-card>
+    </div>
+
+    <div class="col-md-6 ">
+      <ba-card title="POI" baCardClass="with-scroll">
+        <div class="row">
+
+          <div class="col-md-12"><h5>POI frequently asked</h5>
+            <ba-chartist-chart baChartistChartClass="ct-chart stacked-bar"
+                               baChartistChartType="Pie"
+                               [baChartistChartData]="data['labelsPieData']"
+                               [baChartistChartOptions]="data['labelsPieOptions']">
+            </ba-chartist-chart>
+          </div>
+
+        </div>
+      </ba-card>
+    </div>
+  </div>
+
+</section>
