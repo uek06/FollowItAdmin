@@ -3,14 +3,6 @@ import { Pages } from './pages.component';
 // noinspection TypeScriptValidateTypes
 const routes: Routes = [
   {
-    path: 'login',
-    loadChildren: () => System.import('./login/login.module')
-  },
-  {
-    path: 'register',
-    loadChildren: () => System.import('./register/register.module')
-  },
-  {
     path: 'pages',
     component: Pages,
     children: [
@@ -18,14 +10,8 @@ const routes: Routes = [
       { path: 'dashboard', loadChildren: () => System.import('./dashboard/dashboard.module') },
       { path: 'stores', loadChildren: () => System.import('./stores/stores.module') },
       { path: 'beacons', loadChildren: () => System.import('./beacons/beacons.module') },
-      { path: 'editors', loadChildren: () => System.import('./editors/editors.module') },
       //{ path: 'components', loadChildren: () => System.import('./components/components.module') }
-      { path: 'stats', loadChildren: () => System.import('./stats/stats.module') },
-      { path: 'charts', loadChildren: () => System.import('./charts/charts.module') },
-      { path: 'ui', loadChildren: () => System.import('./ui/ui.module') },
-      { path: 'forms', loadChildren: () => System.import('./forms/forms.module') },
-      { path: 'tables', loadChildren: () => System.import('./tables/tables.module') },
-      { path: 'maps', loadChildren: () => System.import('./maps/maps.module') }
+      { path: 'stats', loadChildren: () => System.import('./stats/stats.module') }
     ]
   }
 ];
