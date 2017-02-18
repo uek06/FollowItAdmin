@@ -6,7 +6,7 @@ export const PAGES_MENU = [
         path: 'dashboard',
         data: {
           menu: {
-            title: 'Polytech3000\'s map',
+            title: 'Polygone Riviera map',
             icon: 'ion-home',
             selected: false,
             expanded: false,
